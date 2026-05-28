@@ -1,0 +1,59 @@
+#define BLYNK_TEMPLATE_ID "YourTemplateID"
+#define BLYNK_DEVICE_NAME "HomeAutomation"
+
+#define BLYNK_PRINT Serial
+
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleEsp32.h>
+
+char auth[] = "YourAuthToken";
+char ssid[] = "WiFi_Name";
+char pass[] = "WiFi_Password";
+
+#define Relay1 23
+#define Relay2 22
+#define Relay3 21
+#define Relay4 19
+
+BLYNK_WRITE(V0)
+{
+  digitalWrite(Relay1, param.asInt());
+}
+
+BLYNK_WRITE(V1)
+{
+  digitalWrite(Relay2, param.asInt());
+}
+
+BLYNK_WRITE(V2)
+{
+  digitalWrite(Relay3, param.asInt());
+}
+
+BLYNK_WRITE(V3)
+{
+  digitalWrite(Relay4, param.asInt());
+}
+
+void setup()
+{
+  Serial.begin(115200);
+
+  pinMode(Relay1, OUTPUT);
+  pinMode(Relay2, OUTPUT);
+  pinMode(Relay3, OUTPUT);
+  pinMode(Relay4, OUTPUT);
+
+  digitalWrite(Relay1, LOW);
+  digitalWrite(Relay2, LOW);
+  digitalWrite(Relay3, LOW);
+  digitalWrite(Relay4, LOW);
+
+  Blynk.begin(auth, ssid, pass);
+}
+
+void loop()
+{
+  Blynk.run();
+}
